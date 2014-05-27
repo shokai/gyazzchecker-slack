@@ -23,6 +23,8 @@ if parser.has_option? :help
   exit 1
 end
 
+slack = Slackbot.new Conf['slack']['team'], Conf['slack']['token']
+
 Conf['gyazz'].each do |wiki|
   crawler = Crawler.new wiki['wiki'], wiki['user'], wiki['pass']
   crawler.interval = parser[:interval]
@@ -43,19 +45,18 @@ Conf['gyazz'].each do |wiki|
   end
 
   unless parser[:silent]
-    skype_chat_id = wiki['skype'] ? Conf['skype'][wiki['skype']] : Conf['skype']['default']
     crawler.on :new do |page|
       msg = "(beer) 《新規》 #{page.url_encoded} 《#{page.wiki}》\n"
       msg += "《#{page.name}》\n" if page.url != page.url_encoded
       msg += page.data.map{|i| i.remove_gyazz_markup }.join("\n")
-      Skype::Chat.new(skype_chat_id).post(msg)
+      slack.send Conf['slack']['channel'], msg
     end
 
     crawler.on :diff do |page, diff|
       msg = "(*) 《更新》 #{page.url_encoded} 《#{page.wiki}》\n"
       msg += "《#{page.name}》\n" if page.url != page.url_encoded
       msg += diff.map{|i| i.remove_gyazz_markup }.join("\n")
-      Skype::Chat.new(skype_chat_id).post(msg)
+      slack.send Conf['slack']['channel'], msg
     end
   end
 

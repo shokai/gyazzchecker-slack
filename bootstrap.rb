@@ -3,7 +3,7 @@ require 'mongoid'
 require 'uri'
 require 'gyazz'
 require 'diff-lcs'
-require 'skype'
+require 'slackbot'
 require 'event_emitter'
 require 'args_parser'
 

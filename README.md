@@ -1,16 +1,14 @@
-GyazzChecker-Skype
+GyazzChecker-Slack
 ==================
-https://github.com/shokai/gyazzchecker-skype
+https://github.com/shokai/gyazzchecker-slack
 
 * check Gyazz.com
-* notify Skype
+* notify [Slack.com](https://slack.com)
 
 Requirements
 ------------
 
-* Mac OSX
-* Skype
-* Ruby 1.8.7 (to use rb-skypemac gem)
+* Ruby 2.0+
 * MongoDB 2.0+
 
 
@@ -24,10 +22,6 @@ Install Dependencies
 Setup
 -----
 
-chat list
-
-    % ruby bin/show_chat_list.rb
-
 edit config.yml
 
     % cp sample.config.yml config.yml
@@ -40,15 +34,6 @@ Run
     % ruby bin/gyazzchecker.rb --silent
     % ruby bin/gyazzchecker.rb --limit 30 --interval 5
 
-
-Install LaunchAgent
--------------------
-
-    % cp org.shokai.gyazzchecker-skype.plist ~/Library/LaunchAgents/
-
-edit plist file, then
-
-    % launchctl load -w ~/Library/LaunchAgents/org.shokai.gyazzchecker-skype.plist
 
 
 Contributing
